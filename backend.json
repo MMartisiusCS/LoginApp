@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "patternProperties": {
+    "^[a-zA-Z0-9]+$": {
+      "type": "object",
+      "properties": {
+        "birthday": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The user's birthday in 'MMM dd, yyyy' format. The format attribute may need adjustment based on the actual date-time format used."
+        },
+        "image": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL to the user's image."
+        },
+        "major": {
+          "type": "string",
+          "description": "The user's major field of study."
+        },
+        "name": {
+          "type": "string",
+          "description": "The user's name."
+        },
+        "wakeuptime": {
+          "type": "string",
+          "description": "The user's wakeup time."
+        }
+      },
+      "required": ["birthday", "image", "major", "name", "wakeuptime"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
