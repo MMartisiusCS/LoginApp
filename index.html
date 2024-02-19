@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Front End</title>
+    <style>
+      /* Add your CSS styles here */
+    </style>
+  </head>
+  <body>
+    <header style="background-color: yellow; border: 1px solid black; padding-top: 100px">
+      <img src="https://res.cloudinary.com/doiw0k7or/image/upload/v1708366913/mikegram-high-resolution-logo-transparent_qkh2ys.png" alt="My Logo" style="float: right; max-width: 25%" />
+    </header>
+
+    <style>
+        body {
+            background-color: lightgray;
+        }
+    </style>
+      <section id="profile-app">
+        <h1>Profile App</h1>
+        <!-- Your Profile app web app embedded here -->
+        <iframe src="https://thunkable.site/w/zqtCTk-D-aDNQ8PO1A1FE" title="Profile App" height="700" width="500"></iframe>
+      </section>
+      <section id="user-profiles2">
+        <h2>User Profiles</h2>
+        <table>
+          <tbody id="user-profiles-table">
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+            <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+            <script>
+              // Create the thread table
+              const threadTable = document.createElement("table");
+              const threadTableHead = document.createElement("thead");
+              const threadTableBody = document.createElement("tbody");
+
+              // Add table headers
+              const threadTableHeaders = ["Name", "Profile Picture", "Birthday", "Major", "Wakeup Time"];
+              const threadTableHeaderRow = document.createElement("tr");
+              threadTableHeaders.forEach((headerText) => {
+                const header = document.createElement("th");
+                header.textContent = headerText;
+                threadTableHeaderRow.appendChild(header);
+              });
+              threadTableHead.appendChild(threadTableHeaderRow);
+
+              const firebaseConfig = {
+                apiKey: "AIzaSyBuIpGucvoGLR6GVmXKELMArblvykq80P8",
+                authDomain: "profileapp-e1b60.firebaseapp.com",
+                databaseURL: "https://profileapp-e1b60-default-rtdb.firebaseio.com",
+                projectId: "profileapp-e1b60",
+                storageBucket: "profileapp-e1b60.appspot.com",
+                messagingSenderId: "754411265181",
+                appId: "1:754411265181:web:048a5d927cea82ccb18874",
+                measurementId: "G-YJFVC2Z3SZ",
+              };
+
+              // Initialize Firebase
+
+              firebase.initializeApp(firebaseConfig);
+              // Fetch and populate the thread data
+              const databaseRef = firebase.database().ref();
+              databaseRef.once("value", (snapshot) => {
+                const users = snapshot.val();
+                Object.keys(users).forEach((userKey) => {
+                  const user = users[userKey];
+                  const { name, image, birthday, major, wakeuptime } = user;
+
+                  const threadTableRow = document.createElement("tr");
+
+                  const nameCell = document.createElement("td");
+                  nameCell.textContent = name;
+                  threadTableRow.appendChild(nameCell);
+
+                  const imageCell = document.createElement("td");
+                  const imageElement = document.createElement("img");
+                  imageElement.src = image;
+                  imageElement.alt = "Profile Picture";
+                  imageElement.style.maxWidth = "100px";
+                  imageCell.appendChild(imageElement);
+                  threadTableRow.appendChild(imageCell);
+
+                  const birthdayCell = document.createElement("td");
+                  birthdayCell.textContent = birthday;
+                  threadTableRow.appendChild(birthdayCell);
+
+                  const majorCell = document.createElement("td");
+                  majorCell.textContent = major;
+                  threadTableRow.appendChild(majorCell);
+
+                  const wakeuptimeCell = document.createElement("td");
+                  wakeuptimeCell.textContent = wakeuptime;
+                  threadTableRow.appendChild(wakeuptimeCell);
+
+                  threadTableBody.appendChild(threadTableRow);
+                });
+              });
+
+              // Append table head and body to the table
+              threadTable.appendChild(threadTableHead);
+              threadTable.appendChild(threadTableBody);
+
+              // Append the table to the user-profiles-table element
+              const userProfilesTable = document.getElementById("user-profiles-table");
+              userProfilesTable.appendChild(threadTable);
+            </script>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </body>
+</html>
